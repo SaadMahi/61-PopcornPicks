@@ -3,10 +3,10 @@ import React from 'react';
 import MovieList from './MainChildren/MovieList';
 import WatchedMovie from './MainChildren/WatchedMovie';
 
-const Main = () => {
+const Main = ({ movies }) => {
   return (
     <main className='main'>
-      <MovieList />
+      <MovieList movies={movies} />
       <WatchedMovie />
     </main>
   );

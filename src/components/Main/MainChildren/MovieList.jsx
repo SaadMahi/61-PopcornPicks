@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import MovieListStructure from './MovieListStructure/MovieListStructure';
 
-const MovieList = () => {
+const MovieList = ({ movies }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -13,7 +13,7 @@ const MovieList = () => {
       >
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieListStructure />}
+      {isOpen1 && <MovieListStructure movies={movies} />}
     </div>
   );
 };

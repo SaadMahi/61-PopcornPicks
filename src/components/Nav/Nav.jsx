@@ -4,12 +4,12 @@ import NumResult from './NavChildrens/NumResult';
 
 import React from 'react';
 
-const Nav = () => {
+const Nav = ({ movies }) => {
   return (
     <nav className='nav-bar'>
       <Logo />
       <SearchInput />
-      <NumResult />
+      <NumResult movies={movies} />
     </nav>
   );
 };
