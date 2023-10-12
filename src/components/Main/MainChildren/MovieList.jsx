@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 
-import MovieListStructure from './MovieListStructure/MovieListStructure';
-
-const MovieList = ({ movies }) => {
+const MovieList = ({ children }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -13,7 +11,7 @@ const MovieList = ({ movies }) => {
       >
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieListStructure movies={movies} />}
+      {isOpen1 && children}
     </div>
   );
 };

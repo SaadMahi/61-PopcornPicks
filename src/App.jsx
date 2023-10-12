@@ -1,5 +1,14 @@
 import Nav from './components/Nav/Nav';
 import Main from './components/Main/Main';
+
+import Logo from './components/Nav/NavChildrens/Logo';
+import SearchInput from './components/Nav/NavChildrens/SearchInput';
+import NumResult from './components/Nav/NavChildrens/NumResult';
+
+import MovieList from './components/Main/MainChildren/MovieList';
+import WatchedMovie from './components/Main/MainChildren/WatchedMovie';
+import MovieListStructure from './components/Main/MainChildren/MovieListStructure/MovieListStructure';
+
 import { useState } from 'react';
 
 const tempMovieData = [
@@ -30,8 +39,19 @@ export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   return (
     <>
-      <Nav movies={movies} />
-      <Main movies={movies} />
+      <Nav>
+        <Logo />
+        <SearchInput />
+        <NumResult movies={movies} />
+      </Nav>
+
+      <Main>
+        <MovieList>
+          <MovieListStructure movies={movies} />
+        </MovieList>
+
+        <WatchedMovie />
+      </Main>
     </>
   );
 }

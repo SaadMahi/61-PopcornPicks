@@ -1,17 +1,7 @@
-import Logo from './NavChildrens/Logo';
-import SearchInput from './NavChildrens/SearchInput';
-import NumResult from './NavChildrens/NumResult';
-
 import React from 'react';
 
-const Nav = ({ movies }) => {
-  return (
-    <nav className='nav-bar'>
-      <Logo />
-      <SearchInput />
-      <NumResult movies={movies} />
-    </nav>
-  );
+const Nav = ({ children }) => {
+  return <nav className='nav-bar'>{children}</nav>;
 };
 
 export default Nav;
