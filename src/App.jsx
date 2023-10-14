@@ -5,6 +5,8 @@ import Logo from './components/Nav/NavChildrens/Logo';
 import SearchInput from './components/Nav/NavChildrens/SearchInput';
 import NumResult from './components/Nav/NavChildrens/NumResult';
 
+import Loader from './components/Loader';
+
 import Box from './components/Main/MainChildren/Box';
 import WatchedSummary from './components/Main/MainChildren/WatchedSummary/WatchedSummary';
 import WatchedMoviesList from './components/Main/MainChildren/MovieListStructure/MovieStructure/WatchedList/WatchedMoviesList';
@@ -59,20 +61,35 @@ const tempWatchedData = [
   },
 ];
 
-// * API KEY
-// ! Note: we have used it out side of the component function each time component
-// ! gets rerendered and this variable will also be recreated, which is unnecassary
+/**
+ * * API KEY
+ * ! Note: we have used it out side of the component function each time component
+ * ! gets rerendered and this variable will also be recreated, which is unnecassary
+ */
 const KEY = '1257a641';
+
+// * movie to be searched
+const query = 'Fast and Furious';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
 
+  // * loader on movies section for slow internet connections
+  const [loading, setLoading] = useState(false);
+
   // ! using useEffect to orevent infinite looping in render logic
   useEffect(() => {
-    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=Fast and Furious`)
-      .then((response) => response.json())
-      .then((data) => setMovies(data.Search));
+    async function fetchMovies() {
+      setLoading(true);
+      const res = await fetch(
+        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+      );
+      const data = await res.json();
+      setMovies(data.Search);
+      setLoading(false);
+    }
+    fetchMovies();
   }, []);
 
   return (
@@ -85,7 +102,7 @@ export default function App() {
 
       <Main>
         <Box>
-          <MovieListStructure movies={movies} />
+          {loading ? <Loader /> : <MovieListStructure movies={movies} />}
         </Box>
 
         <Box>
