@@ -10,7 +10,7 @@ import WatchedSummary from './components/Main/MainChildren/WatchedSummary/Watche
 import WatchedMoviesList from './components/Main/MainChildren/MovieListStructure/MovieStructure/WatchedList/WatchedMoviesList';
 import MovieListStructure from './components/Main/MainChildren/MovieListStructure/MovieListStructure';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const tempMovieData = [
   {
@@ -59,9 +59,22 @@ const tempWatchedData = [
   },
 ];
 
+// * API KEY
+// ! Note: we have used it out side of the component function each time component
+// ! gets rerendered and this variable will also be recreated, which is unnecassary
+const KEY = '1257a641';
+
 export default function App() {
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+
+  // ! using useEffect to orevent infinite looping in render logic
+  useEffect(() => {
+    fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=Fast and Furious`)
+      .then((response) => response.json())
+      .then((data) => setMovies(data.Search));
+  }, []);
+
   return (
     <>
       <Nav>
@@ -71,27 +84,15 @@ export default function App() {
       </Nav>
 
       <Main>
-        <Box element={<MovieListStructure movies={movies} />} />
-
-        {/*   <Box>
+        <Box>
           <MovieListStructure movies={movies} />
-        </Box> */}
+        </Box>
 
-        <Box
-          element={
-            <>
-              <WatchedSummary watched={watched} />
-
-              <WatchedMoviesList watched={watched} />
-            </>
-          }
-        />
-
-        {/*     <Box>
+        <Box>
           <WatchedSummary watched={watched} />
 
           <WatchedMoviesList watched={watched} />
-        </Box> */}
+        </Box>
       </Main>
     </>
   );
