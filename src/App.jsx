@@ -6,6 +6,7 @@ import SearchInput from './components/Nav/NavChildrens/SearchInput';
 import NumResult from './components/Nav/NavChildrens/NumResult';
 
 import Loader from './components/Loader';
+import ErrorMessage from './components/ErrorMessage';
 
 import Box from './components/Main/MainChildren/Box';
 import WatchedSummary from './components/Main/MainChildren/WatchedSummary/WatchedSummary';
@@ -69,7 +70,7 @@ const tempWatchedData = [
 const KEY = '1257a641';
 
 // * movie to be searched
-const query = 'Fast and Furious';
+const query = 'tom and jerry';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -78,16 +79,33 @@ export default function App() {
   // * loader on movies section for slow internet connections
   const [loading, setLoading] = useState(false);
 
+  // * handling error on ui when disconnect
+  const [error, setError] = useState();
+
   // ! using useEffect to orevent infinite looping in render logic
   useEffect(() => {
     async function fetchMovies() {
-      setLoading(true);
-      const res = await fetch(
-        `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
-      );
-      const data = await res.json();
-      setMovies(data.Search);
-      setLoading(false);
+      try {
+        setLoading(true);
+        const res = await fetch(
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+        );
+
+        if (!res.ok)
+          throw new Error('something went wrong with fetching movies');
+
+        const data = await res.json();
+
+        if (data.Response === 'False') throw new Error('Movie not found');
+
+        setMovies(data.Search);
+        console.log(data);
+      } catch (err) {
+        // //console.log(err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     }
     fetchMovies();
   }, []);
@@ -102,7 +120,9 @@ export default function App() {
 
       <Main>
         <Box>
-          {loading ? <Loader /> : <MovieListStructure movies={movies} />}
+          {loading && <Loader />}
+          {!loading && !error && <MovieListStructure movies={movies} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
 
         <Box>
