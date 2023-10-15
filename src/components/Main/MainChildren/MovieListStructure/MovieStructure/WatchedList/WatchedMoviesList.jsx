@@ -2,11 +2,15 @@ import React from 'react';
 
 import WatchedMovieStructure from './WatchedMovieStructure/WatchedMovieStructure';
 
-const WatchedMoviesList = ({ watched }) => {
+const WatchedMoviesList = ({ watched, onDeleteMovie }) => {
   return (
     <ul className='list'>
       {watched.map((movie) => (
-        <WatchedMovieStructure movie={movie} key={movie.imdbID} />
+        <WatchedMovieStructure
+          movie={movie}
+          key={movie.imdbID}
+          onDeleteMovie={onDeleteMovie}
+        />
       ))}
     </ul>
   );

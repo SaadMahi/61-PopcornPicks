@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Loader from './Loader';
 import Star from './Star';
@@ -8,6 +8,8 @@ const SelectedMovie = ({
   onClickLeftArrow,
   movie,
   isLoading,
+  addToWatchList,
+  watchedArray,
 }) => {
   // * setting fetched movies data's custom key
   const {
@@ -24,6 +26,36 @@ const SelectedMovie = ({
     imdbRating,
   } = movie;
   // //console.log(movie);
+
+  const handleAdd = function () {
+    const newMovie = {
+      imdbID: selectedMovieId,
+      title,
+      year,
+      poster,
+      imdbRating: Number(imdbRating),
+      runtime: Number(runtime.split(' ').at(0)),
+      userRating,
+    };
+
+    addToWatchList(newMovie);
+    onClickLeftArrow();
+  };
+
+  // * pulling star value
+  const [userRating, setUserRating] = useState('');
+
+  // * if same movie is selected more than once or not
+  const watchedMovies = watchedArray
+    .map((movie) => movie.imdbID)
+    .includes(selectedMovieId);
+  // console.log(watchedMovies);
+
+  // * user rated movie star display ui
+  const watchedMovieUserRating = watchedArray.find(
+    (movie) => movie.imdbID === selectedMovieId
+  )?.userRating;
+  // //console.log(watchedMovieUserRating);
 
   return (
     <div className='details'>
@@ -51,11 +83,27 @@ const SelectedMovie = ({
 
           <section>
             <div className='rating'>
-              <Star
-                length={10}
-                starSize={24}
-                // messages={['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']}
-              />
+              {!watchedMovies ? (
+                <>
+                  <Star
+                    length={10}
+                    starSize={22}
+                    // messages={['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']}
+                    setUserRating={setUserRating}
+                    rating={userRating}
+                  />
+
+                  {userRating > 0 && (
+                    <button onClick={handleAdd} className='btn-add'>
+                      + Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>
+                  You have already rated this movie {watchedMovieUserRating} ⭐
+                </p>
+              )}
             </div>
             <p>
               <em>{plot}</em>

@@ -10,6 +10,8 @@ const Star = ({
   messages = [],
   defaultRating = 0,
   movieRatingLength = 0,
+  setUserRating,
+  rating,
 }) => {
   Star.propTypes = {
     length: PropTypes.number,
@@ -91,8 +93,9 @@ const Star = ({
     // border: '2px solid green',
   };
 
-  // * useState to extract clicked value from stars
+  /*   // * useState to extract clicked value from stars
   const [rating, setRating] = useState(defaultRating);
+  setUserRating(rating); */
 
   // * useState to add hover effect
   const [temporaryRating, setTemporaryRating] = useState(0);
@@ -103,7 +106,7 @@ const Star = ({
         {Array.from({ length: length }, (_, i) => (
           <span
             onClick={() => {
-              setRating(i + 1);
+              setUserRating(i + 1);
               {
                 movieRatingLength && movieRatingLength(i + 1);
               }

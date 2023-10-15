@@ -71,12 +71,12 @@ const tempWatchedData = [
 const KEY = '1257a641';
 
 // * movie to be searched
-const temporaryQuery = 'Fast and Furious';
+const temporaryQuery = 'fast and furious';
 
 export default function App() {
   // * displaying movies on left and right
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState([]); // added movies to watched list
 
   // * loader on movies section for slow internet connections
   const [loading, setLoading] = useState(false);
@@ -85,7 +85,7 @@ export default function App() {
   const [error, setError] = useState();
 
   // * search query for user to search movies
-  const [query, setQuery] = useState('fast and furious');
+  const [query, setQuery] = useState('interstellar');
   // //console.log(query);
 
   /**
@@ -140,14 +140,24 @@ export default function App() {
     fetchMovies();
   }, [query]);
 
-  // *** creating setup for watched movies *** //
+  // ********* creating setup for watched movies ********* //
 
   // * selected movies by id
   const [movie, setMovie] = useState({});
-  // //console.log(title, year);
+  // //console.log(movie);
 
-  // * loading effect on selected movie
+  // * add movie to watch list
+  const addToWatchList = function (movie) {
+    setWatched((prev) => [...prev, movie]);
+  };
+
+  // * loading effect on selected movie on right section
   const [isLoading, setIsLoading] = useState(false);
+
+  // * delete watched moview btn (x)
+  const deleteWatchedMovies = (id) => {
+    setWatched(watched.filter((movies) => movies.imdbID !== id));
+  };
 
   // ! will fetch new data for watched movies using id
   useEffect(() => {
@@ -192,11 +202,16 @@ export default function App() {
               onClickLeftArrow={onClickLeftArrow}
               movie={movie}
               isLoading={isLoading}
+              addToWatchList={addToWatchList}
+              watchedArray={watched}
             />
           ) : (
             <>
               <WatchedSummary watched={watched} />
-              <WatchedMoviesList watched={watched} />
+              <WatchedMoviesList
+                watched={watched}
+                onDeleteMovie={deleteWatchedMovies}
+              />
             </>
           )}
         </Box>
