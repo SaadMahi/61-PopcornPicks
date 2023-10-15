@@ -1,8 +1,8 @@
 import React from 'react';
 
-const MovieStructure = ({ movie }) => {
+const MovieStructure = ({ movie, onClickMovieId }) => {
   return (
-    <li>
+    <li onClick={() => onClickMovieId(movie.imdbID)}>
       <img src={movie.Poster} alt={`${movie.Title} poster`} />
       <h3>{movie.Title}</h3>
       <div>

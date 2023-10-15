@@ -25,7 +25,7 @@ import MovieStructure from './MovieStructure/MovieStructure';
   },
 ]; */
 
-const MovieListStructure = ({ movies }) => {
+const MovieListStructure = ({ movies, onClickMovieId }) => {
   /**
    * const [movies, setMovies] = useState(tempMovieData);
    * ! we are going to do prop drilling with this.
@@ -49,9 +49,13 @@ const MovieListStructure = ({ movies }) => {
    */
 
   return (
-    <ul className='list'>
+    <ul className='list list-movies'>
       {movies?.map((movie) => (
-        <MovieStructure movie={movie} key={movie.imdbID} />
+        <MovieStructure
+          onClickMovieId={onClickMovieId}
+          movie={movie}
+          key={movie.imdbID}
+        />
       ))}
     </ul>
   );
