@@ -70,7 +70,7 @@ const tempWatchedData = [
 const KEY = '1257a641';
 
 // * movie to be searched
-const query = 'tom and jerry';
+const temporaryQuery = 'Fast and Furious';
 
 export default function App() {
   const [movies, setMovies] = useState([]);
@@ -82,11 +82,16 @@ export default function App() {
   // * handling error on ui when disconnect
   const [error, setError] = useState();
 
+  // * search query for user to search movies
+  const [query, setQuery] = useState('');
+  // //console.log(query);
+
   // ! using useEffect to orevent infinite looping in render logic
   useEffect(() => {
     async function fetchMovies() {
       try {
         setLoading(true);
+
         const res = await fetch(
           `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
         );
@@ -99,7 +104,7 @@ export default function App() {
         if (data.Response === 'False') throw new Error('Movie not found');
 
         setMovies(data.Search);
-        console.log(data);
+        // //console.log(data);
       } catch (err) {
         // //console.log(err);
         setError(err.message);
@@ -107,14 +112,20 @@ export default function App() {
         setLoading(false);
       }
     }
+
+    if (query.length < 3) {
+      setMovies([]);
+      setError('');
+      return;
+    }
     fetchMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <Nav>
         <Logo />
-        <SearchInput />
+        <SearchInput setSearchValue={setQuery} searchValue={query} />
         <NumResult movies={movies} />
       </Nav>
 
