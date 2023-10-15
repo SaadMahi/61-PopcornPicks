@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Loader from './Loader';
 import Star from './Star';
@@ -26,6 +26,19 @@ const SelectedMovie = ({
     imdbRating,
   } = movie;
   // //console.log(movie);
+
+  /**
+   * * change browser title on movie selection
+   * ! for changing title we have used useEffect as it is an interaction
+   * ! with something that is outside of the react which is an sideEffect
+   */
+  useEffect(
+    function () {
+      if (!title) return;
+      document.title = `Movie | ${title}`;
+    },
+    [title]
+  );
 
   const handleAdd = function () {
     const newMovie = {
