@@ -85,7 +85,7 @@ export default function App() {
   const [error, setError] = useState();
 
   // * search query for user to search movies
-  const [query, setQuery] = useState('interstellar');
+  const [query, setQuery] = useState('');
   // //console.log(query);
 
   /**
@@ -143,6 +143,7 @@ export default function App() {
       setError('');
       return;
     }
+    onClickLeftArrow();
     fetchMovies();
 
     // * clean up function
