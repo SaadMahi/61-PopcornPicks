@@ -32,6 +32,7 @@ const Star = ({
   // * empty star icon svg
   const emptyStartIcon = (
     <svg
+      className='star-size'
       style={star}
       role='button'
       xmlns='http://www.w3.org/2000/svg'
@@ -51,6 +52,7 @@ const Star = ({
   // * full star icon svg
   const fullStarIcon = (
     <svg
+      className='star-size'
       style={star}
       role='button'
       xmlns='http://www.w3.org/2000/svg'
@@ -74,7 +76,7 @@ const Star = ({
     gap: '20px',
     // border: '2px solid blue',
 
-    minWidth: '250px',
+    minWidth: '240px',
 
     /*position: 'relative', */
   };
@@ -101,7 +103,7 @@ const Star = ({
   const [temporaryRating, setTemporaryRating] = useState(0);
 
   return (
-    <div style={starContainer}>
+    <div style={starContainer} className='container-star'>
       <div style={innerContainer}>
         {Array.from({ length: length }, (_, i) => (
           <span

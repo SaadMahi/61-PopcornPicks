@@ -410,6 +410,24 @@ body {
     top: 0;
     transform: translateY(10px);
   }
+
+  .btn-add {
+    width: 80%;
+  }
+
+  .star-size {
+    width: 20px;
+    height: 20px;
+  }
+
+  .rating {
+    padding: 1rem;
+    margin-bottom: 0.8rem;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 @media (max-width: 370px) {
@@ -419,5 +437,18 @@ body {
 
   .modify--list div {
     font-size: 90%;
+  }
+
+  .star-size {
+    width: 15px;
+    height: 15px;
+  }
+
+  .container-star {
+    margin-left: 50px;
+  }
+
+  .btn-add {
+    width: 60%;
   }
 }
