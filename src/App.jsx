@@ -71,7 +71,7 @@ const tempWatchedData = [
 const KEY = '1257a641';
 
 // * movie to be searched
-const temporaryQuery = [
+/* const temporaryQuery = [
   'fast and furious',
   'interstellar',
   'saw',
@@ -86,7 +86,7 @@ const temporaryQuery = [
   'times',
 ];
 
-const dummyRandomQuery = temporaryQuery[Math.floor(Math.random() * 12)];
+const dummyRandomQuery = temporaryQuery[Math.floor(Math.random() * 12)]; */
 
 export default function App() {
   // * displaying movies on left and right
@@ -100,7 +100,7 @@ export default function App() {
   const [error, setError] = useState();
 
   // * search query for user to search movies
-  const [query, setQuery] = useState(dummyRandomQuery);
+  const [query, setQuery] = useState('');
   // //console.log(query);
 
   /**
