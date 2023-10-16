@@ -372,3 +372,58 @@ EMPTY STAR
 </svg>
 
 */
+
+@media (max-width: 1000px) {
+  .main {
+    /* border: red 2px solid; */
+    flex-wrap: wrap;
+  }
+
+  .box {
+    /* border: blue 2px solid; */
+    max-width: unset;
+    width: 100%;
+  }
+
+  .logo h1 {
+    display: none;
+  }
+
+  .nav-bar {
+    grid-template-columns: 50px 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .logo {
+    display: none;
+  }
+
+  .nav-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-bar {
+    column-gap: 5px;
+  }
+
+  .search {
+    width: 35rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .nav-bar {
+    grid-template-columns: 1fr;
+  }
+
+  .search {
+    width: 100%;
+  }
+
+  .hideOnSm {
+    display: none;
+  }
+}
