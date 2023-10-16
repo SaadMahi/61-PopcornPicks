@@ -4,7 +4,7 @@ import WatchedMovieStructure from './WatchedMovieStructure/WatchedMovieStructure
 
 const WatchedMoviesList = ({ watched, onDeleteMovie }) => {
   return (
-    <ul className='list'>
+    <ul className='list modify--list'>
       {watched.map((movie) => (
         <WatchedMovieStructure
           movie={movie}
