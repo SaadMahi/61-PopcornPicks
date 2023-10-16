@@ -107,12 +107,14 @@ export default function App() {
 
   // ! using useEffect to avoid infinite looping in render logic
   useEffect(() => {
+    const controller = new AbortController();
     async function fetchMovies() {
       try {
         setLoading(true);
         setError('');
         const res = await fetch(
-          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`
+          `http://www.omdbapi.com/?apikey=${KEY}&s=${query}`,
+          { signal: controller.signal }
         );
 
         if (!res.ok)
@@ -123,10 +125,14 @@ export default function App() {
         if (data.Response === 'False') throw new Error('Movie not found');
 
         setMovies(data.Search);
+        setError('');
         // //console.log(data.Search);
       } catch (err) {
         // //console.log(err);
-        setError(err.message);
+
+        if (err.name !== 'AbortError') {
+          setError(err.message);
+        }
       } finally {
         setLoading(false);
       }
@@ -138,6 +144,11 @@ export default function App() {
       return;
     }
     fetchMovies();
+
+    // * clean up function
+    return function () {
+      controller.abort();
+    };
   }, [query]);
 
   // ********* creating setup for watched movies ********* //
