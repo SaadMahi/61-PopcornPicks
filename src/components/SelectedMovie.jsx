@@ -74,6 +74,35 @@ const SelectedMovie = ({
   )?.userRating;
   // //console.log(watchedMovieUserRating);
 
+  /** Adding escape key to go back alternate of click <- arrow
+   * * adding escape key feature so we can go back using ESC key in watched movie right section
+   * * for that we will use useEffect as it will give us power to manupulate in DOM
+   * * this means we are stepping outside the React therefore the reason this useEffect is also known as escape hatch
+   * * so that's basically escaping, having to write all the code in React way
+   * ! next thing we noticed is that error keeps on accumulating the document.addEventListener on concole,
+   * ! we get dozens of log of escaped
+   * ! therefore we require clean up which will avoid accumulating it
+   * * well the actual reason is that when the movie mounts a new event listner is added to the document
+   * * basically a additional one to the ones we already have, so each time the effect is executed
+   * * it will add one more event listener to the document, so if we open up 10 movies and then close them all
+   * * we will end up with 10 same event listeners attached to the document which is not a good idea.
+   * * therefore we need to clean up our event listeners
+   */
+  useEffect(() => {
+    const esc = (e) => {
+      if (e.code === 'Escape') {
+        onClickLeftArrow();
+        // //console.log('escaped');
+      }
+    };
+
+    document.addEventListener('keydown', esc);
+
+    return function () {
+      document.removeEventListener('keydown', esc); // ! as soon as the movie details compo unmounts the event listener will be removed from the document
+    };
+  }, []);
+
   return (
     <div className='details'>
       {isLoading ? (
