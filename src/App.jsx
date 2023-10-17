@@ -91,7 +91,11 @@ const dummyRandomQuery = temporaryQuery[Math.floor(Math.random() * 12)]; */
 export default function App() {
   // * displaying movies on left and right
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]); // added movies to watched list
+
+  const [watched, setWatched] = useState(() => {
+    const storedValue = localStorage.getItem('watched');
+    return JSON.parse(storedValue);
+  }); // added movies to watched list
 
   // * loader on movies section for slow internet connections
   const [loading, setLoading] = useState(false);
@@ -201,6 +205,12 @@ export default function App() {
 
     getMovieDetails();
   }, [selectedMovieId]);
+
+  // ! useEffect to store watched movies into local storage
+
+  useEffect(() => {
+    localStorage.setItem('watched', JSON.stringify(watched));
+  }, [watched]);
 
   return (
     <>
