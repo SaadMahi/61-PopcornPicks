@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
 function SearchInput({ searchValue, setSearchValue }) {
-  const inputEl = useRef(null);
+  const inputEl = useRef();
 
   useEffect(() => {
     console.log(inputEl.current);
