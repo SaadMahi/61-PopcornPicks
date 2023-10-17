@@ -92,10 +92,18 @@ export default function App() {
   // * displaying movies on left and right
   const [movies, setMovies] = useState([]);
 
+  /** GETTING DATA TO WATCH LIST FROM LOCAL STORAGE
+   * * whenever a initial state is dependant on some computation
+   * * like here we are reading data from the local storage
+   * * we can pass in a call back function like this instead of just a single value
+   * * this process is called lazy evaluation
+   * ! this callback must be a pure function
+   * ! it should require no arguments in order to work
+   */
   const [watched, setWatched] = useState(() => {
     const storedValue = localStorage.getItem('watched');
     return JSON.parse(storedValue);
-  }); // added movies to watched list
+  });
 
   // * loader on movies section for slow internet connections
   const [loading, setLoading] = useState(false);
