@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import useKey from '../../Custom Hooks/useKey';
 
 function SearchInput({ searchValue, setSearchValue }) {
   const inputEl = useRef();
@@ -9,9 +10,9 @@ function SearchInput({ searchValue, setSearchValue }) {
     // * reason to use this separate call back function is so we can clean up after our event
     const searchInputFocus = function (e) {
       // ! when your input element is active it will simply return instead of making your query empty
-      if (document.activeElement === inputEl.current) return;
 
       if (e.code === 'Enter') {
+        if (document.activeElement === inputEl.current) return;
         inputEl.current.focus();
         setSearchValue('');
       }
@@ -24,6 +25,12 @@ function SearchInput({ searchValue, setSearchValue }) {
       document.removeEventListener('keydown', searchInputFocus);
     };
   }, [setSearchValue]);
+
+  useKey('Enter', () => {
+    if (document.activeElement === inputEl.current) return;
+    inputEl.current.focus();
+    setSearchValue('');
+  });
 
   return (
     <input
