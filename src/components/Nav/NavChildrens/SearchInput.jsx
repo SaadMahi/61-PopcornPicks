@@ -4,7 +4,7 @@ function SearchInput({ searchValue, setSearchValue }) {
   const inputEl = useRef();
 
   useEffect(() => {
-    console.log(inputEl.current);
+    // //console.log(inputEl.current);
 
     // * reason to use this separate call back function is so we can clean up after our event
     const searchInputFocus = function (e) {

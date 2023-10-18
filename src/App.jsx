@@ -15,6 +15,7 @@ import MovieListStructure from './components/Main/MainChildren/MovieListStructur
 import SelectedMovie from './components/SelectedMovie';
 
 import { useEffect, useState } from 'react';
+import useLocaleStorageState from './components/Custom Hooks/useLocaleStorageState';
 
 const tempMovieData = [
   {
@@ -92,18 +93,16 @@ export default function App() {
   // * displaying movies on left and right
   const [movies, setMovies] = useState([]);
 
-  /** GETTING DATA TO WATCH LIST FROM LOCAL STORAGE
-   * * whenever a initial state is dependant on some computation
-   * * like here we are reading data from the local storage
-   * * we can pass in a call back function like this instead of just a single value
-   * * this process is called lazy evaluation
-   * ! this callback must be a pure function
-   * ! it should require no arguments in order to work
+  /**
+   * ! using our custom hook
+   * * set its initial value to empty array
    */
-  const [watched, setWatched] = useState(() => {
+  const [watched, setWatched] = useLocaleStorageState([], 'watched');
+
+  /*   const [watched, setWatched] = useState(() => {
     const storedValue = localStorage.getItem('watched');
     return JSON.parse(storedValue);
-  });
+  }); */
 
   // * loader on movies section for slow internet connections
   const [loading, setLoading] = useState(false);
@@ -215,10 +214,7 @@ export default function App() {
   }, [selectedMovieId]);
 
   // ! useEffect to store watched movies into local storage
-
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watched));
-  }, [watched]);
+  // * we moved it to custom hook
 
   return (
     <>
