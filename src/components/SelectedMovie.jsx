@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Loader from './Loader';
 import Star from './Star';
+import useKey from './Custom Hooks/useKey';
 
 const SelectedMovie = ({
   selectedMovieId,
@@ -87,7 +88,8 @@ const SelectedMovie = ({
    * * it will add one more event listener to the document, so if we open up 10 movies and then close them all
    * * we will end up with 10 same event listeners attached to the document which is not a good idea.
    * * therefore we need to clean up our event listeners
-   */
+   
+  // !!! MOVED THE WHOLE CODE TO CUSTOM HOOK !!! \\
   useEffect(() => {
     const esc = (e) => {
       if (e.code === 'Escape') {
@@ -102,6 +104,9 @@ const SelectedMovie = ({
       document.removeEventListener('keydown', esc); // ! as soon as the movie details compo unmounts the event listener will be removed from the document
     };
   }, []);
+*/
+
+  useKey('Escape', onClickLeftArrow);
 
   return (
     <div className='details'>
