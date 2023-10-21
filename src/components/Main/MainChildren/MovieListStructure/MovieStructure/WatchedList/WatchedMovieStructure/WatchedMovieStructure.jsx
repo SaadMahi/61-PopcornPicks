@@ -9,7 +9,7 @@ const WatchedMovieStructure = ({ movie, onDeleteMovie }) => {
       <div>
         <p>
           <span>⭐️</span>
-          <span>{movie.imdbRating}</span>
+          <span>{isNaN(movie.imdbRating) ? 'N/A' : movie.imdbRating}</span>
         </p>
         <p>
           <span>🌟</span>
@@ -17,7 +17,7 @@ const WatchedMovieStructure = ({ movie, onDeleteMovie }) => {
         </p>
         <p>
           <span>⏳</span>
-          <span>{movie.runtime} min</span>
+          <span>{isNaN(movie.runtime) ? 'N/A' : movie.runtime + ' min'} </span>
         </p>
         <button
           onClick={() => onDeleteMovie(movie.imdbID)}
